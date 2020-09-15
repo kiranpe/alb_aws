@@ -70,7 +70,6 @@ variable "ports" {
   description = "HTTPS-External-Allow-All-WAF-Active"
 }
 
-######################
 #ALB
 ######################
 

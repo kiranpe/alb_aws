@@ -118,10 +118,10 @@ resource "aws_lb_listener" "alb_listener" {
   count = var.create_lb ? length(var.https_listeners) : 0
 
   load_balancer_arn = aws_lb.alb[0].arn
-  port              = var.http_listeners[count.index]["port"]
-  protocol          = lookup(var.http_listeners[count.index], "protocol", "HTTPS")
-#  certificate_arn   = var.https_listeners[count.index]["certificate_arn"]
-#  ssl_policy        = lookup(var.https_listeners[count.index], "ssl_policy", var.listener_ssl_policy_default)
+  port              = var.https_listeners[count.index]["port"]
+  protocol          = lookup(var.https_listeners[count.index], "protocol", "HTTPS")
+  certificate_arn   = var.https_listeners[count.index]["certificate_arn"]
+  ssl_policy        = lookup(var.https_listeners[count.index], "ssl_policy", var.listener_ssl_policy_default)
 
 
   default_action {

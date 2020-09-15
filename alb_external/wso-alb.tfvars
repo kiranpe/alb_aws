@@ -28,9 +28,9 @@ name                             = "public-alb"
 load_balancer_type               = "application"
 internal                         = false
 
-subnet_ids                       = ["subnet-29a56d42", "subnet-85ea84c9"]
+subnet_ids                       = ["subnet-abcd123", "subnet-adcb12"]
 
-zone_id                          = "Z0319703F0CL8XGIF95X"
+#zone_id                          = "Z031970395X"
 idle_timeout                     = 65
 enable_cross_zone_load_balancing = false
 enable_deletion_protection       = false
@@ -70,14 +70,6 @@ health_check = [
 
 #Listeners
 ###############
-
-http_listeners = [
-    {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
-    }
-]
 
 https_listeners = [
   {
