@@ -50,7 +50,7 @@ load_balancer_update_timeout     = "10m"
 #Teraget Group
 ###############
 
-tg_name = [""]
+tg_name = ["wso-PSTG1-alb-int", "wso-PSTG1-alb-int-b"]
 
 target_groups = [
   {
@@ -64,6 +64,78 @@ target_groups = [
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
+  },
+  {
+    name = "wso-GWWTG1-alb-int"
+    backend_port     = 8243
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-GWMTG1-alb-int"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-IDMTG1-alb-int"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-TMTG1-alb-int"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-BPSTG1-alb-int"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-AnltsTG1-alb-int"
+    backend_port     = 9444
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-GWWTG-alb-int-b"
+    backend_port     = 8243
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-GWMTG1-alb-int-b"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-IDMTG1-alb-int-b"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-TMTG1-alb-int-b"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-BPSTG1-alb-int-b"
+    backend_port     = 9443
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
+  },
+  {
+    name = "wso-AnltsTG1-alb-int-b"
+    backend_port     = 9444
+    backend_protocol = "HTTPS"
+    target_type      = "instance"
   }
 ]
 
@@ -75,6 +147,136 @@ health_check = [
     interval            = 180
     path                = "/carbon/admin/images/favicon.ico"
     port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 180
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 300
+    path                = "/TagServices"
+    port                = 8243
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 300
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9444
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 300
+    path                = "/TagServices"
+    port                = 8243
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 300
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9443
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    protocol            = "HTTPS"
+    matcher             = 200
+  },
+  {
+    interval            = 60
+    path                = "/carbon/admin/images/favicon.ico"
+    port                = 9444
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 5

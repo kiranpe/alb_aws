@@ -78,6 +78,53 @@ resource "aws_lb" "alb" {
   }
 }
 
+##########################
+#PrivateTG's
+##########################
+
+resource "aws_lb_target_group" "alb_target_group" {
+  count = var.create_lb ? length(var.target_groups) : 0
+
+  name        = lookup(var.target_groups[count.index],"name", null)
+  port        = lookup(var.target_groups[count.index],"backend_port", null)
+  protocol    = lookup(var.target_groups[count.index], "backend_protocol", null)
+  target_type = lookup(var.target_groups[count.index], "target_type", null)
+
+  vpc_id = var.vpc_id
+
+  stickiness {
+    type    = "lb_cookie"
+    cookie_duration = 10
+    enabled = var.target_group_sticky
+  }
+
+  health_check {
+      interval            = lookup(var.health_check[count.index], "interval", null)
+      path                = lookup(var.health_check[count.index], "path", null)
+      port                = lookup(var.health_check[count.index], "port", null)
+      healthy_threshold   = lookup(var.health_check[count.index], "healthy_threshold", null)
+      unhealthy_threshold = lookup(var.health_check[count.index], "unhealthy_threshold", null)
+      timeout             = lookup(var.health_check[count.index], "timeout", null)
+      protocol            = lookup(var.health_check[count.index], "protocol", null)
+      matcher             = lookup(var.health_check[count.index], "matcher", null)
+  }
+
+  depends_on = [aws_lb.alb]
+
+  tags = {
+    Name               = "${var.StackName}"
+    APMID           = "${var.APMID}"
+    BillingApprover = "${var.BillingApprover}"
+    BusinessSegment = "${var.BusinessSegment}"
+    BusinessTower   = "${var.BusinessTower}"
+    CreatedBy       = "${var.CreatedBy}"
+    Environment        = "${var.Environment}"
+    FMC             = "${var.FMC}"
+    Service         = "${var.Service}"
+    SupportGroup    = "${var.SupportGroup}"
+  }
+}
+
 ################
 #ALBListener
 ################
