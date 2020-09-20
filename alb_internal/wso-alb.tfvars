@@ -314,13 +314,58 @@ listener_ssl_policy_default = "ELBSecurityPolicy-TLS-1-2-2017-01"
 
 host_name = ["www.youtube.com", "www.facebook.com"] 
 
-https_listener_rules = [
+rule1 = [
   {
     https_listener_index = 0
     priority             = 1
-  },
+  }
+]
+
+rule2 = [
   {
     https_listener_index = 0
     priority             = 2
   }
+]
+
+rule3 = [
+  {
+    https_listener_index = 0
+    priority             = 3
+  }
+]
+
+rule4 = [
+  {
+    https_listener_index = 0
+    priority             = 4
+  }
+]
+
+rule5 = [
+  {
+    https_listener_index = 0
+    priority             = 5
+  }
+]
+
+rule6 = [
+  {
+    https_listener_index = 0
+    priority             = 6
+  }
+]
+
+rule7 = [
+  {
+    https_listener_index = 0
+    priority             = 7
+  }
+]
+
+rule8 = [
+  {
+    https_listener_index = 0
+    priority             = 8
+  } 
 ]

@@ -229,3 +229,35 @@ variable "https_listener_rules" {
   type        = any
   default     = []
 }
+
+variable "rule1" {
+  type       = any
+}
+
+variable "rule2" {
+  type       = any
+}
+
+variable "rule3" {
+  type       = any
+}
+
+variable "rule4" {
+  type       = any
+}
+
+variable "rule5" {
+  type       = any
+}
+
+variable "rule6" {
+  type       = any
+}
+
+variable "rule7" {
+  type       = any
+}
+
+variable "rule8" {
+  type       = any
+}
