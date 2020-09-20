@@ -100,6 +100,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBGWWListenerRule" {
     }
   }
 
+#Replace with GatewayWorkerHostname
+
   condition {
     host_header {
       values = ["example.com"]
@@ -128,6 +130,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBGWMListenerRule" {
      }
     }
   }
+
+#Replace with GatewayManagerHostname
 
   condition {
     host_header {
@@ -158,6 +162,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBIDMListenerRule" {
     }
   }
 
+#Replace with IDMHostname
+
   condition {
     host_header {
       values = ["example.com"]
@@ -186,6 +192,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBTMListenerRule" {
      }
     }
   }
+
+#Replace with TrafficManagerHostname
 
   condition {
     host_header {
@@ -216,6 +224,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBBPSListenerRule" {
     }
   }
 
+#Replace with BPSHostname
+
   condition {
     host_header {
       values = ["example.com"]
@@ -244,6 +254,8 @@ resource "aws_lb_listener_rule" "PrivateECSALBAnalyticsListenerRule" {
      }
     }
   }
+
+#Replace with AnalyticsHostname
 
   condition {
     host_header {

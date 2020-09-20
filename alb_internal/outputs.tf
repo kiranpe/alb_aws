@@ -1,24 +1,24 @@
-output "this_lb_id" {
+output "alb_id" {
   description = "The ID and ARN of the load balancer we created."
   value       = aws_lb.alb.*.id
 }
 
-output "this_lb_arn" {
+output "alb_arn" {
   description = "The ID and ARN of the load balancer we created."
   value       = aws_lb.alb.*.arn
 }
 
-output "this_lb_dns_name" {
+output "alb_dns_name" {
   description = "The DNS name of the load balancer."
   value       = aws_lb.alb.*.dns_name
 }
 
-output "this_lb_arn_suffix" {
+output "alb_arn_suffix" {
   description = "ARN suffix of our load balancer - can be used with CloudWatch."
   value       = aws_lb.alb.*.arn_suffix
 }
 
-output "this_lb_zone_id" {
+output "alb_zone_id" {
   description = "The zone_id of the load balancer to assist with creating DNS records."
   value       = aws_lb.alb.*.zone_id
 }

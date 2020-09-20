@@ -170,11 +170,6 @@ variable "load_balancer_update_timeout" {
 #Target Group
 ###############
 
-variable "tg_name" {
-  type = list(string)
-  description = "list of target group names"
-}
-
 variable "target_groups" {
   description = "A list of maps containing key/value pairs that define the target groups to be created. Order of these maps is important and the index of these are to be referenced in listener definitions. Required key/values: name, backend_protocol, backend_port"
   type        = any
@@ -218,11 +213,6 @@ variable "listener_ssl_policy_default" {
 
 #Listener Rules
 ################
-
-variable "host_name" {
-  description = "List of header host names"
-  type        = list(string)
-}
 
 variable "https_listener_rules" {
   description = "A list of maps describing the Listener Rules for this ALB. Required key/values: actions, conditions. Optional key/values: priority, https_listener_index (default to https_listeners[count.index])"

@@ -50,8 +50,6 @@ load_balancer_update_timeout     = "10m"
 #Teraget Group
 ###############
 
-tg_name = ["wso-PSTG1-alb-int", "wso-PSTG1-alb-int-b"]
-
 target_groups = [
   {
     name = "wso-PSTG1-alb-int"
@@ -309,10 +307,6 @@ listener_ssl_policy_default = "ELBSecurityPolicy-TLS-1-2-2017-01"
 
 #Listener Rules
 ###################
-
-#Replace with GatewayWorkerHostname and IDMHostname values
-
-host_name = ["www.youtube.com", "www.facebook.com"] 
 
 rule1 = [
   {
