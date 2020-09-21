@@ -8,8 +8,8 @@ resource "aws_lb_listener" "alb_listener" {
   load_balancer_arn = aws_lb.alb[0].arn
   port              = var.http_listeners[count.index]["port"]
   protocol          = lookup(var.http_listeners[count.index], "protocol", "HTTPS")
-#  certificate_arn   = var.https_listeners[count.index]["certificate_arn"]
-#  ssl_policy        = lookup(var.https_listeners[count.index], "ssl_policy", var.listener_ssl_policy_default)
+  #  certificate_arn   = var.https_listeners[count.index]["certificate_arn"]
+  #  ssl_policy        = lookup(var.https_listeners[count.index], "ssl_policy", var.listener_ssl_policy_default)
 
 
   default_action {
@@ -29,16 +29,16 @@ resource "aws_lb_listener_rule" "PrivateECSALBAPIMStoreListenerRule" {
   priority     = lookup(var.rule1[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[0].id 
+        arn    = aws_lb_target_group.alb_target_group[0].id
         weight = 1
       }
-     target_group {
-      arn = aws_lb_target_group.alb_target_group[1].id
-      weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[1].id
+        weight = 1
+      }
     }
   }
 
@@ -58,16 +58,16 @@ resource "aws_lb_listener_rule" "PrivateECSALBAPIMPublisherListenerRule" {
   priority     = lookup(var.rule2[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[0].id
+        arn    = aws_lb_target_group.alb_target_group[0].id
         weight = 1
       }
-     target_group {
-      arn = aws_lb_target_group.alb_target_group[1].id
-      weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[1].id
+        weight = 1
+      }
     }
   }
 
@@ -87,20 +87,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBGWWListenerRule" {
   priority     = lookup(var.rule3[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[2].id
+        arn    = aws_lb_target_group.alb_target_group[2].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[8].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[8].id
+        weight = 1
+      }
     }
   }
 
-#Replace with GatewayWorkerHostname
+  #Replace with GatewayWorkerHostname
 
   condition {
     host_header {
@@ -118,20 +118,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBGWMListenerRule" {
   priority     = lookup(var.rule4[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[3].id
+        arn    = aws_lb_target_group.alb_target_group[3].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[9].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[9].id
+        weight = 1
+      }
     }
   }
 
-#Replace with GatewayManagerHostname
+  #Replace with GatewayManagerHostname
 
   condition {
     host_header {
@@ -149,20 +149,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBIDMListenerRule" {
   priority     = lookup(var.rule5[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[4].id
+        arn    = aws_lb_target_group.alb_target_group[4].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[10].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[10].id
+        weight = 1
+      }
     }
   }
 
-#Replace with IDMHostname
+  #Replace with IDMHostname
 
   condition {
     host_header {
@@ -180,20 +180,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBTMListenerRule" {
   priority     = lookup(var.rule6[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[5].id
+        arn    = aws_lb_target_group.alb_target_group[5].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[11].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[11].id
+        weight = 1
+      }
     }
   }
 
-#Replace with TrafficManagerHostname
+  #Replace with TrafficManagerHostname
 
   condition {
     host_header {
@@ -211,20 +211,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBBPSListenerRule" {
   priority     = lookup(var.rule7[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[6].id
+        arn    = aws_lb_target_group.alb_target_group[6].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[12].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[12].id
+        weight = 1
+      }
     }
   }
 
-#Replace with BPSHostname
+  #Replace with BPSHostname
 
   condition {
     host_header {
@@ -234,7 +234,7 @@ resource "aws_lb_listener_rule" "PrivateECSALBBPSListenerRule" {
 
   depends_on = [aws_lb_target_group.alb_target_group]
 }
- 
+
 resource "aws_lb_listener_rule" "PrivateECSALBAnalyticsListenerRule" {
   count = var.create_lb && length(var.rule8) > 0 ? length(var.rule8) : 0
 
@@ -242,20 +242,20 @@ resource "aws_lb_listener_rule" "PrivateECSALBAnalyticsListenerRule" {
   priority     = lookup(var.rule8[count.index], "priority", null)
 
   action {
-    type             = "forward"
+    type = "forward"
     forward {
       target_group {
-        arn = aws_lb_target_group.alb_target_group[7].id
+        arn    = aws_lb_target_group.alb_target_group[7].id
         weight = 1
       }
-     target_group {
-        arn = aws_lb_target_group.alb_target_group[13].id
-        weight   = 1
-     }
+      target_group {
+        arn    = aws_lb_target_group.alb_target_group[13].id
+        weight = 1
+      }
     }
   }
 
-#Replace with AnalyticsHostname
+  #Replace with AnalyticsHostname
 
   condition {
     host_header {

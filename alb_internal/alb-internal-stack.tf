@@ -21,10 +21,10 @@ resource "aws_security_group" "alb_ingress" {
       cidr_blocks = ["10.0.0.0/8"]
       description = "HTTPS-Internal"
     }
-  } 
-  
+  }
+
   dynamic "ingress" {
-    for_each  = var.ports
+    for_each = var.ports
 
     content {
       from_port   = ingress.value
@@ -48,7 +48,7 @@ resource "aws_lb" "alb" {
   internal           = var.internal
   security_groups    = [aws_security_group.alb_ingress.id]
   subnets            = var.subnet_ids
-#  zone_id            = var.zone_id
+  #  zone_id            = var.zone_id
 
   idle_timeout                     = var.idle_timeout
   enable_cross_zone_load_balancing = var.enable_cross_zone_load_balancing
@@ -65,13 +65,13 @@ resource "aws_lb" "alb" {
   depends_on = [aws_security_group.alb_ingress]
 
   tags = {
-    Name               = "${var.StackName}"
+    Name            = "${var.StackName}"
     APMID           = "${var.APMID}"
     BillingApprover = "${var.BillingApprover}"
     BusinessSegment = "${var.BusinessSegment}"
     BusinessTower   = "${var.BusinessTower}"
     CreatedBy       = "${var.CreatedBy}"
-    Environment        = "${var.Environment}"
+    Environment     = "${var.Environment}"
     FMC             = "${var.FMC}"
     Service         = "${var.Service}"
     SupportGroup    = "${var.SupportGroup}"
@@ -85,40 +85,40 @@ resource "aws_lb" "alb" {
 resource "aws_lb_target_group" "alb_target_group" {
   count = var.create_lb ? length(var.target_groups) : 0
 
-  name        = lookup(var.target_groups[count.index],"name", null)
-  port        = lookup(var.target_groups[count.index],"backend_port", null)
+  name        = lookup(var.target_groups[count.index], "name", null)
+  port        = lookup(var.target_groups[count.index], "backend_port", null)
   protocol    = lookup(var.target_groups[count.index], "backend_protocol", null)
   target_type = lookup(var.target_groups[count.index], "target_type", null)
 
   vpc_id = var.vpc_id
 
   stickiness {
-    type    = "lb_cookie"
+    type            = "lb_cookie"
     cookie_duration = 10
-    enabled = var.target_group_sticky
+    enabled         = var.target_group_sticky
   }
 
   health_check {
-      interval            = lookup(var.health_check[count.index], "interval", null)
-      path                = lookup(var.health_check[count.index], "path", null)
-      port                = lookup(var.health_check[count.index], "port", null)
-      healthy_threshold   = lookup(var.health_check[count.index], "healthy_threshold", null)
-      unhealthy_threshold = lookup(var.health_check[count.index], "unhealthy_threshold", null)
-      timeout             = lookup(var.health_check[count.index], "timeout", null)
-      protocol            = lookup(var.health_check[count.index], "protocol", null)
-      matcher             = lookup(var.health_check[count.index], "matcher", null)
+    interval            = lookup(var.health_check[count.index], "interval", null)
+    path                = lookup(var.health_check[count.index], "path", null)
+    port                = lookup(var.health_check[count.index], "port", null)
+    healthy_threshold   = lookup(var.health_check[count.index], "healthy_threshold", null)
+    unhealthy_threshold = lookup(var.health_check[count.index], "unhealthy_threshold", null)
+    timeout             = lookup(var.health_check[count.index], "timeout", null)
+    protocol            = lookup(var.health_check[count.index], "protocol", null)
+    matcher             = lookup(var.health_check[count.index], "matcher", null)
   }
 
   depends_on = [aws_lb.alb]
 
   tags = {
-    Name               = "${var.StackName}"
+    Name            = "${var.StackName}"
     APMID           = "${var.APMID}"
     BillingApprover = "${var.BillingApprover}"
     BusinessSegment = "${var.BusinessSegment}"
     BusinessTower   = "${var.BusinessTower}"
     CreatedBy       = "${var.CreatedBy}"
-    Environment        = "${var.Environment}"
+    Environment     = "${var.Environment}"
     FMC             = "${var.FMC}"
     Service         = "${var.Service}"
     SupportGroup    = "${var.SupportGroup}"

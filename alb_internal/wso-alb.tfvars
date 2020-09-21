@@ -1,25 +1,25 @@
 #Tags
 ########
 
-Environment           = "dev"
-APMID              = ""
-App                   = ""
-FMC                = ""
-BillingApprover    = ""
-BusinessSegment    = ""
-Service            = ""
-ClusterName           = "alb"
-BusinessTower      = ""
-CreatedBy          = ""
-SupportGroup       = ""
-CertificateArn        = ""
-StackName             = "private-alb"
+Environment            = "dev"
+APMID                  = ""
+App                    = ""
+FMC                    = ""
+BillingApprover        = ""
+BusinessSegment        = ""
+Service                = ""
+ClusterName            = "alb"
+BusinessTower          = ""
+CreatedBy              = ""
+SupportGroup           = ""
+CertificateArn         = ""
+StackName              = "private-alb"
 TrafficManagerHostname = ""
-Name = ""
-LogstashHostname = ""
-BPSHostname = ""
+Name                   = ""
+LogstashHostname       = ""
+BPSHostname            = ""
 GatewayManagerHostname = ""
-AnalyticsHostname = ""
+AnalyticsHostname      = ""
 
 
 #Security Group
@@ -30,12 +30,12 @@ ports = [80, 443]
 #ALB
 ########
 
-create_lb                        = true
-name                             = "PrivateAppLoadBalancer"
-load_balancer_type               = "application"
-internal                         = true
+create_lb          = true
+name               = "PrivateAppLoadBalancer"
+load_balancer_type = "application"
+internal           = true
 
-subnet_ids                       = ["subnet-29a56d42", "subnet-85ea84c9"]
+subnet_ids = ["subnet-29a56d42", "subnet-85ea84c9"]
 
 zone_id                          = "Z0319703F0CL8XGIF95X"
 idle_timeout                     = 65
@@ -52,85 +52,85 @@ load_balancer_update_timeout     = "10m"
 
 target_groups = [
   {
-    name = "wso-PSTG1-alb-int"
+    name             = "wso-PSTG1-alb-int"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-PSTG1-alb-int-b"
+    name             = "wso-PSTG1-alb-int-b"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-GWWTG1-alb-int"
+    name             = "wso-GWWTG1-alb-int"
     backend_port     = 8243
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-GWMTG1-alb-int"
+    name             = "wso-GWMTG1-alb-int"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-IDMTG1-alb-int"
+    name             = "wso-IDMTG1-alb-int"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-TMTG1-alb-int"
+    name             = "wso-TMTG1-alb-int"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-BPSTG1-alb-int"
+    name             = "wso-BPSTG1-alb-int"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-AnltsTG1-alb-int"
+    name             = "wso-AnltsTG1-alb-int"
     backend_port     = 9444
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-GWWTG-alb-int-b"
+    name             = "wso-GWWTG-alb-int-b"
     backend_port     = 8243
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-GWMTG1-alb-int-b"
+    name             = "wso-GWMTG1-alb-int-b"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-IDMTG1-alb-int-b"
+    name             = "wso-IDMTG1-alb-int-b"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-TMTG1-alb-int-b"
+    name             = "wso-TMTG1-alb-int-b"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-BPSTG1-alb-int-b"
+    name             = "wso-BPSTG1-alb-int-b"
     backend_port     = 9443
     backend_protocol = "HTTPS"
     target_type      = "instance"
   },
   {
-    name = "wso-AnltsTG1-alb-int-b"
+    name             = "wso-AnltsTG1-alb-int-b"
     backend_port     = 9444
     backend_protocol = "HTTPS"
     target_type      = "instance"
@@ -287,11 +287,11 @@ health_check = [
 ###############
 
 http_listeners = [
-    {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
-    }
+  {
+    port               = 80
+    protocol           = "HTTP"
+    target_group_index = 0
+  }
 ]
 
 https_listeners = [
@@ -361,5 +361,5 @@ rule8 = [
   {
     https_listener_index = 0
     priority             = 8
-  } 
+  }
 ]

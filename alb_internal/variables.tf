@@ -221,33 +221,33 @@ variable "https_listener_rules" {
 }
 
 variable "rule1" {
-  type       = any
+  type = any
 }
 
 variable "rule2" {
-  type       = any
+  type = any
 }
 
 variable "rule3" {
-  type       = any
+  type = any
 }
 
 variable "rule4" {
-  type       = any
+  type = any
 }
 
 variable "rule5" {
-  type       = any
+  type = any
 }
 
 variable "rule6" {
-  type       = any
+  type = any
 }
 
 variable "rule7" {
-  type       = any
+  type = any
 }
 
 variable "rule8" {
-  type       = any
+  type = any
 }
