@@ -1,16 +1,20 @@
 ALB EXTERNAL
 --------------
 
---> Create workspaces
+--> Intialize terraform
+    
+    Ex: terrform init
+    
+--> Now create workspaces
 
     Ex: terraform workspace new prod
 
     --> It will create worspace folders in your backend s3 bucket.
 
---> Now Run terraform apply.
+--> Then Run terraform apply.
 
-      --> it will create external application load balancer using your workspace variable.
+      --> It will create external application load balancer using your workspace variable.
    
-      --> if you want to create dev instance create dev worspace and run it.
+      --> If you want to create dev instance create dev worspace and run it.
 
---> terraform state file will be your backend s3 bucket.
+--> Terraform state file will be your backend s3 bucket.
