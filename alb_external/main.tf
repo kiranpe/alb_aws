@@ -94,21 +94,6 @@ module "alb" {
   #Listener Rules
   ###################
 
-  #Replace with GatewayWorkerHostname and IDMHostname values
-
-  #host_name = ["www.youtube.com", "www.facebook.com"]
-
-  #https_listener_rules = [
-  #  {
-  #    https_listener_index = 0
-  #    priority             = 1
-  #  },
-  #  {
-  #    https_listener_index = 0
-  #    priority             = 2
-  #  }
-  #]
-
   http_listener_rules = [
     {
       http_listener_index = 0
@@ -123,11 +108,6 @@ module "alb" {
   ########################
   #EC2 Instance
   ########################
-
-  #region           = "us-east-2"
-  #image_id = {
-  #  us-west-2      = "ami-0a34f9b326b9bac9b"
-  #}
 
   instance_type = "t2.micro"
   key_name      = "jenkins"

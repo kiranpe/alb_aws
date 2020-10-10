@@ -1,4 +1,3 @@
-#############
 #Tags
 #############
 
@@ -24,7 +23,6 @@ variable "StackName" {
   type = string
 }
 
-###################
 #Security Group
 ###################
 
@@ -112,7 +110,6 @@ variable "load_balancer_update_timeout" {
   type        = string
 }
 
-###############
 #Target Group
 ###############
 
@@ -141,7 +138,6 @@ variable "health_check" {
   type        = any
 }
 
-#############
 #Listeners
 #############
 
@@ -162,9 +158,13 @@ variable "listener_ssl_policy_default" {
   type        = string
 }
 
-################
 #Listener Rules
 ################
+
+#variable "host_name" {
+#  description = "List of header host names"
+#  type        = list(string)
+#}
 
 variable "http_listener_rules" {
   description = "A list of maps describing the Listener Rules for this ALB. Required key/values: actions, conditions. Optional key/values: priority, https_listener_index (default to https_listeners[count.index])"
@@ -175,6 +175,11 @@ variable "http_listener_rules" {
 #######################
 #EC2 Instance
 #######################
+
+#variable "image_id" {
+#  description = "The EC2 image ID to launch"
+#  type        = map(string)
+#}
 
 variable "instance_type" {
   description = "The size of instance to launch"
