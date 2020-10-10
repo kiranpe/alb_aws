@@ -1,7 +1,7 @@
 ALB EXTERNAL
 --------------
 
---> Intialize terraform
+--> Intialize terraform.
     
     Ex: terrform init
     
