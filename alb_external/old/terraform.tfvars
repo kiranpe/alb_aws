@@ -1,36 +1,28 @@
 #Tags
 ########
 
-Environment           = "prod"
-TagAPMID              = ""
-App                   = ""
-TagFMC                = ""
-TagBillingApprover    = ""
-TagBusinessSegment    = ""
-TagService            = ""
-ClusterName           = "alb"
-TagBusinessTower      = ""
-TagCreatedBy          = ""
-TagSupportGroup       = ""
-CertificateArn        = ""
-StackName             = "public-alb"
+App             = "ALB-External"
+BillingApprover = "Kiran Peddineni"
+CreatedBy       = "Kiran Peddineni"
+SupportGroup    = "Terraform"
+StackName       = "public-alb"
 
 #Security Group
 ################
 
-ports = [80, 443]
+ports = [22, 80, 443]
 
 #ALB
 ########
 
-create_lb                        = true
-name                             = "public-alb"
-load_balancer_type               = "application"
-internal                         = false
+create_lb          = true
+name               = "public-alb"
+load_balancer_type = "application"
+internal           = false
 
-subnet_ids                       = ["subnet-abcd123", "subnet-adcb12"]
+subnet_ids = ["subnet-29a56d42", "subnet-85ea84c9"]
 
-#zone_id                          = "Z031970395X"
+zone_id                          = "Z0319703F0CL8XGIF95X"
 idle_timeout                     = 65
 enable_cross_zone_load_balancing = false
 enable_deletion_protection       = false
@@ -59,17 +51,25 @@ target_group_sticky = true
 health_check = [
   {
     interval            = 30
-    path                = "/publisher/site/pages/login.jag"
-    port                = 443
+    path                = "/index.html"
+    port                = 80
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 5
-    protocol            = "HTTPS"
+    protocol            = "HTTP"
   }
 ]
 
 #Listeners
 ###############
+
+http_listeners = [
+  {
+    port               = 80
+    protocol           = "HTTP"
+    target_group_index = 0
+  }
+]
 
 https_listeners = [
   {
@@ -87,15 +87,34 @@ listener_ssl_policy_default = "ELBSecurityPolicy-2016-08"
 
 #Replace with GatewayWorkerHostname and IDMHostname values
 
-host_name = ["www.youtube.com", "www.facebook.com"] 
+#host_name = ["www.youtube.com", "www.facebook.com"]
 
-https_listener_rules = [
+#https_listener_rules = [
+#  {
+#    https_listener_index = 0
+#    priority             = 1
+#  },
+#  {
+#    https_listener_index = 0
+#    priority             = 2
+#  }
+#]
+
+http_listener_rules = [
   {
-    https_listener_index = 0
+    http_listener_index = 0
     priority             = 1
   },
-  {
-    https_listener_index = 0
-    priority             = 2
-  }
 ]
+
+########################
+#EC2 Instance
+########################
+
+#region           = "us-east-2"
+#image_id = {
+#  us-west-2      = "ami-0a34f9b326b9bac9b"
+#}
+
+instance_type    = "t2.micro"
+key_name         = "jenkins"

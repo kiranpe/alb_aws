@@ -1,21 +1,13 @@
-####################
-#ALBSecurityGroup
-####################
-
-resource "aws_security_group" "alb_ingress" {
-  name   = "alb_ingress"
-  vpc_id = var.vpc_id
-
-  dynamic "ingress" {
-    for_each = var.ports
-
-    content {
-      from_port   = ingress.value
-      to_port     = ingress.value
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/8"]
-      description = "ALB Security Group"
-    }
+###############
+#Tags
+###############
+locals {
+  common_tags = {
+    Name            = "${var.StackName}"
+    BillingApprover = "${var.BillingApprover}"
+    CreatedBy       = "${var.CreatedBy}"
+    Environment     = "${terraform.workspace}"
+    SupportGroup    = "${var.SupportGroup}"
   }
 }
 
@@ -26,7 +18,7 @@ resource "aws_security_group" "alb_ingress" {
 resource "aws_lb" "alb" {
   count = var.create_lb ? 1 : 0
 
-  name               = var.name
+  name               = "${terraform.workspace}-${var.name}"
   load_balancer_type = var.load_balancer_type
   internal           = var.internal
   security_groups    = [aws_security_group.alb_ingress.id]
@@ -45,20 +37,7 @@ resource "aws_lb" "alb" {
     delete = var.load_balancer_delete_timeout
   }
 
-  depends_on = [aws_security_group.alb_ingress]
-
-  tags = {
-    Name               = "${var.StackName}"
-    TagAPMID           = "${var.TagAPMID}"
-    TagBillingApprover = "${var.TagBillingApprover}"
-    TagBusinessSegment = "${var.TagBusinessSegment}"
-    TagBusinessTower   = "${var.TagBusinessTower}"
-    TagCreatedBy       = "${var.TagCreatedBy}"
-    Environment        = "${var.Environment}"
-    TagFMC             = "${var.TagFMC}"
-    TagService         = "${var.TagService}"
-    TagSupportGroup    = "${var.TagSupportGroup}"
-  }
+  tags = local.common_tags
 }
 
 #######################
@@ -68,7 +47,7 @@ resource "aws_lb" "alb" {
 resource "aws_lb_target_group" "alb_target_group" {
   count = var.create_lb ? length(var.target_groups) : 0
 
-  name        = "${var.tg_name}-${var.StackName}"
+  name        = "${terraform.workspace}-${var.tg_name}"
   port        = lookup(var.target_groups[count.index], "backend_port", null)
   protocol    = lookup(var.target_groups[count.index], "backend_protocol", null)
   target_type = lookup(var.target_groups[count.index], "target_type", null)
@@ -76,9 +55,9 @@ resource "aws_lb_target_group" "alb_target_group" {
   vpc_id = var.vpc_id
 
   stickiness {
-    type    = "lb_cookie"
+    type            = "lb_cookie"
     cookie_duration = 600
-    enabled = var.target_group_sticky
+    enabled         = var.target_group_sticky
   }
 
   dynamic "health_check" {
@@ -96,18 +75,7 @@ resource "aws_lb_target_group" "alb_target_group" {
 
   depends_on = [aws_lb.alb]
 
-  tags = {
-    Name               = "${var.StackName}"
-    TagAPMID           = "${var.TagAPMID}"
-    TagBillingApprover = "${var.TagBillingApprover}"
-    TagBusinessSegment = "${var.TagBusinessSegment}"
-    TagBusinessTower   = "${var.TagBusinessTower}"
-    TagCreatedBy       = "${var.TagCreatedBy}"
-    Environment        = "${var.Environment}"
-    TagFMC             = "${var.TagFMC}"
-    TagService         = "${var.TagService}"
-    TagSupportGroup    = "${var.TagSupportGroup}"
-  }
+  tags = local.common_tags
 }
 
 ################
@@ -115,14 +83,11 @@ resource "aws_lb_target_group" "alb_target_group" {
 ################
 
 resource "aws_lb_listener" "alb_listener" {
-  count = var.create_lb ? length(var.https_listeners) : 0
+  count = var.create_lb ? length(var.http_listeners) : 0
 
   load_balancer_arn = aws_lb.alb[0].arn
-  port              = var.https_listeners[count.index]["port"]
-  protocol          = lookup(var.https_listeners[count.index], "protocol", "HTTPS")
-  certificate_arn   = var.https_listeners[count.index]["certificate_arn"]
-  ssl_policy        = lookup(var.https_listeners[count.index], "ssl_policy", var.listener_ssl_policy_default)
-
+  port              = var.http_listeners[count.index]["port"]
+  protocol          = lookup(var.http_listeners[count.index], "protocol", "HTTPS")
 
   default_action {
     target_group_arn = aws_lb_target_group.alb_target_group[0].arn
@@ -134,25 +99,32 @@ resource "aws_lb_listener" "alb_listener" {
 #ECSNginxListenerRule && ECSNginxIDMListenerRule
 ##################################################
 
-resource "aws_lb_listener_rule" "https_listener_rule" {
-  count = var.create_lb && length(var.https_listener_rules) > 0 ? length(var.https_listener_rules) : 0
+resource "aws_lb_listener_rule" "http_listener_rule" {
+  count = var.create_lb && length(var.http_listener_rules) > 0 ? length(var.http_listener_rules) : 0
 
-  listener_arn = aws_lb_listener.alb_listener[lookup(var.https_listener_rules[count.index], "https_listener_index", count.index)].arn
-  priority     = lookup(var.https_listener_rules[count.index], "priority", null)
+  listener_arn = aws_lb_listener.alb_listener[0].arn
+  priority     = lookup(var.http_listener_rules[count.index], "priority", null)
 
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_target_group[0].id
   }
 
-  dynamic "condition" {
-    for_each = var.host_name
-    content {
-      host_header {
-       values = [element(var.host_name, count.index)]
-      }
+  condition {
+    path_pattern {
+      values = ["/index.html"]
     }
   }
 
   depends_on = [aws_lb_target_group.alb_target_group]
+}
+
+################################
+#Target Group Attachement
+################################
+
+resource "aws_lb_target_group_attachment" "instance" {
+  target_group_arn = aws_lb_target_group.alb_target_group[0].arn
+  target_id        = aws_instance.docker.id
+  port             = 80
 }

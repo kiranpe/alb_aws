@@ -1,60 +1,21 @@
 #Tags
 #############
 
-variable "Environment" {
-  type        = string
-  description = "Choose the environment configuration. Choose from sandbox, dev, mgmt, test, or prod"
-}
-
-variable "TagAPMID" {
-  type        = string
-  description = "Email address or name of team building the instances."
-}
-
 variable "App" {
   type        = string
   description = "Email address or name of team responsible for supporting the instances."
 }
 
-variable "TagFMC" {
-  type        = string
-  description = "The 6-digit charge code used for billing.  This billing code might be specific to a project or a team. TagFMC must be six digits."
-}
-
-variable "TagBillingApprover" {
+variable "BillingApprover" {
   type        = string
   description = "Provide the project code if applicable."
 }
 
-variable "TagBusinessSegment" {
-  type        = string
-  description = "Provide the employee ID if available."
-}
-
-variable "TagService" {
-  type        = string
-  description = "Provide the TagService if available."
-}
-
-variable "ClusterName" {
-  type        = string
-  description = "Select a name to apply to the cluster."
-}
-
-variable "TagBusinessTower" {
-  type        = string
-  description = "Specify a App Prefix for App Ids."
-}
-
-variable "TagCreatedBy" {
+variable "CreatedBy" {
   type = string
 }
 
-variable "TagSupportGroup" {
-  type = string
-}
-
-variable "CertificateArn" {
+variable "SupportGroup" {
   type = string
 }
 
@@ -70,12 +31,18 @@ variable "ports" {
   description = "HTTPS-External-Allow-All-WAF-Active"
 }
 
+######################
 #ALB
 ######################
 
 variable "create_lb" {
   description = "Controls if the Load Balancer should be created"
   type        = bool
+}
+
+variable "security_groups" {
+  type = list(string)
+  default = [""]
 }
 
 variable "name" {
@@ -194,13 +161,32 @@ variable "listener_ssl_policy_default" {
 #Listener Rules
 ################
 
-variable "host_name" {
-  description = "List of header host names"
-  type        = list(string)
-}
+#variable "host_name" {
+#  description = "List of header host names"
+#  type        = list(string)
+#}
 
-variable "https_listener_rules" {
+variable "http_listener_rules" {
   description = "A list of maps describing the Listener Rules for this ALB. Required key/values: actions, conditions. Optional key/values: priority, https_listener_index (default to https_listeners[count.index])"
   type        = any
   default     = []
+}
+
+#######################
+#EC2 Instance
+#######################
+
+#variable "image_id" {
+#  description = "The EC2 image ID to launch"
+#  type        = map(string)
+#}
+
+variable "instance_type" {
+  description = "The size of instance to launch"
+  type        = string
+}
+
+variable "key_name" {
+  description = ""
+  type        = string
 }
