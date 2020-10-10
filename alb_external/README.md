@@ -13,8 +13,9 @@ ALB EXTERNAL
 
 --> Then Run terraform apply.
 
-    --> It will create external application load balancer using your workspace variable.
+    --> It will create EC2 instance and Security group and External Application Load Balancer using your workspace variable and attach the EC2 instance to
+    Load balancer Target Group.
    
-    --> If you want to create dev instance create dev worspace and run it.
+    --> If you want to create dev instance create dev worspace first and run scripts.
 
 --> Terraform state file will be your backend s3 bucket.
