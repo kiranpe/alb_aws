@@ -1,7 +1,8 @@
 ALB EXTERNAL
-##############
+--------------
 
 --> Create workspaces
+
     Ex: terraform workspace new prod
 
 --> it will create worspace folders in your backend s3 bucket
