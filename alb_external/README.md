@@ -9,8 +9,8 @@ ALB EXTERNAL
 
 --> Now Run terraform apply.
 
-   --> it will create external application load balancer using your workspace variable.
+      --> it will create external application load balancer using your workspace variable.
    
-   --> if you want to create dev instance create dev worspace and run it.
+      --> if you want to create dev instance create dev worspace and run it.
 
---> terraform state file will be your s3 bucket.
+--> terraform state file will be your backend s3 bucket.
