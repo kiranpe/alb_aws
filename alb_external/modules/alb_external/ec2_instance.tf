@@ -1,3 +1,7 @@
+######################
+#EC2 Instance
+######################
+
 locals {
   ec2_tags = {
     Name = "${terraform.workspace}-instance"
