@@ -1,0 +1,50 @@
+trigger:
+- master/dummy
+
+stages:
+- stage: 'Build'
+  displayName: 'Create ALB'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build Job'
+    pool:
+      vmImage: 'ubuntu-18.04'
+
+    steps:
+    - task: AmazonWebServices.aws-vsts-tools.AWSShellScript.AWSShellScript@1
+      displayName: "ALB Pipeline"
+      enabled: true
+      inputs:
+       awsCredentials: 'alb_aws_connect'
+       regionName: 'us-east-2'
+       scriptType: inline
+       inlineScript: |   
+         #!/bin/bash
+         terraform init
+         terraform workspace new prod-public
+         terraform workspace select prod-public
+         terraform plan
+         terraform apply --auto-approve
+
+- stage: 'Destroy'
+  displayName: 'Destroy ALB'
+  dependsOn: Build
+  jobs: 
+  - job: 'Destroy'
+    displayName: 'Destroy Job'
+    pool:
+      vmImage: 'ubuntu-18.04'
+
+    steps:
+    - task: AmazonWebServices.aws-vsts-tools.AWSShellScript.AWSShellScript@1
+      displayName: "Destroy ALB Pipeline"
+      enabled: false
+      inputs:
+       awsCredentials: 'alb_aws_connect'
+       regionName: 'us-east-2'
+       scriptType: inline
+       inlineScript: |   
+         #!/bin/bash
+         terraform init
+         terraform workspace select prod-public
+         terraform destroy --auto-approve
